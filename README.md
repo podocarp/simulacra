@@ -1,5 +1,7 @@
 # Simulacra
 
-[field](helmholtz/img/field.png)
+<p align="center">
+<img src="helmholtz/img/field.png">
+</p>
 
-A repository of some scripts and stuff.
+A repository of some simulation and visualization scripts and stuff.
