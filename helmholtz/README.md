@@ -1,6 +1,8 @@
 ## Helmholtz
 
-[contour](img/contour.png)
+<p align="center">
+<img src="img/contour.png">
+</p>
 
 Simulates a Helmholtz coil with an optional magnetic dipole in the middle.
 Configure through editing the `.py` file.
@@ -15,7 +17,7 @@ It is simple and dirty.
 
 `python helmholtz.py all` plots both of them
 
-The 2D plots still calculate the whole 3D field before drawing. This is honestly
+The 2D plots still calculate the whole 3D field before drawing. This is quite
 inefficient but it still works reasonably fine `div = 100` (so 1000000 points),
 runs in a few seconds.
 
