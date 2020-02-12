@@ -11,15 +11,16 @@ when you turn the dipole's strength up. Screenshots available in `img/`.
 Another point of interest: this script demonstrates a way to plot colored quiver
 plots in matplotlib.
 
+## Configuration
+
+Edit `settings.json`. Do not remove any entries, no error handling is provided.
+The parameters are fairly self-explanatory, and the code is commented if you
+want to know exactly what they do. The most important is probably the `plot?`
+field, which when set to 1, plots that specific type of graph.
+
 ## Usage
 
-Configure through editing the `.py` file. It is commented. To launch the script:
-
-`python helmholtz.py contour` plots the 2D contour at a cross section at y=0.
-
-`python helmholtz.py field` plots the full 3D field.
-
-`python helmholtz.py all` plots both of them
+To launch the script: `python helmholtz.py`
 
 The plots are saved in the same folder as the script.
 
