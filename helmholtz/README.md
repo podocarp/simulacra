@@ -1,4 +1,4 @@
-## Helmholtz
+# Helmholtz
 
 <p align="center">
 <img src="img/contour.png">
@@ -6,7 +6,10 @@
 
 Simulates a Helmholtz coil with an optional magnetic dipole (just acurrent loop)
 in the middle. Plots both contours (as above) and 3D field plots. It gets fun 
-when you turn the dipole's strength up.
+when you turn the dipole's strength up. Screenshots available in `img/`.
+
+Another point of interest: this script demonstrates a way to plot colored quiver
+plots in matplotlib.
 
 ## Usage
 
