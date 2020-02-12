@@ -1,33 +1,41 @@
+import json
+import sys
+
 import matplotlib
 matplotlib.use('GTK3Agg')
-from pylab import *
-from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d
+from pylab import *
 
-R = 20     # helmholtz coil radius
-sR = 6    # small coil radius
-viewport = 30 # plot goes from negative of this to positive of this
+with open('settings.json') as f:
+    settings = json.load(f)
+    R = settings['R']   # helmholtz coil radius
+    sR = settings['sR']  # small coil radius
+    viewport = settings['viewport']  # plot goes -v to v.
+    helmholtz = settings['helmholtz']
+    dipole = settings['dipole']
+    contoursettings = settings['contour']
+    quiversettings = settings['quiver']
 
 # These control the spacing of the coils. The 3 arguments (a, b, n) specify the
 # coils are made up of n turns of wire evenly spaced from coordinates z=a to
 # z=b. Setting n=0 turns off that coil.
-coilspacing = linspace(-2, 2, 5)
-smallcoilspacing = linspace(-0.5, 0.5, 1)
+coilspacing = linspace(helmholtz['from'], helmholtz['to'], helmholtz['number'])
+smallcoilspacing = linspace(dipole['from'], dipole['to'], dipole['number'])
 
 # Ratio of strength of large coil to small coil to compensate. For example if
 # the large coil has 1000 turns and the small coil only 1 turn, we can set this
 # to 200, while simulating only 5 turns for the large coil (using the options
 # above). Or, we can just simulate 1 turn and set this to 1000. It can also be
 # used to compensate for current settings.
-ratio = 20
+ratio = helmholtz['ratio']
 
 xaxis, yaxis, zaxis = None, None, None
 x, y, z = None, None, None
 
-
 def initaxes(nx, ny, nz):
-    global x,y,z
-    global xaxis,yaxis,zaxis
+    global x, y ,z
+    global xaxis, yaxis, zaxis
     xaxis = linspace(-viewport, viewport, nx)
     yaxis = linspace(-viewport, viewport, ny)
     zaxis = linspace(-viewport, viewport, nz)
@@ -64,8 +72,8 @@ phi = mgrid[0:2*pi:30j]
 #### CONTOUR PLOTTING (CROSS SECTION)
 def contourplot():
     plt.figure(num = 1, figsize = (8, 8))
-    div = 100
-    bx,by,bz = simulate(div, div, div, 10)
+    div = contoursettings['resolution']
+    bx,by,bz = simulate(div, div, div, contoursettings['dtheta'])
 
     # magnitudes
     c = sqrt(bx**2 + by**2 + bz**2)
@@ -76,7 +84,7 @@ def contourplot():
     c /= c[div//2-1,div//2-1]
 
     # draw contour lines and also dots to represent the cross section of the coil
-    cp = contour(yaxis, zaxis, c, levels=[.1,.2,.3,.4,.5,.6,.7,.8,.9,.95,1,1.05,1.1,1.2])
+    cp = contour(yaxis, zaxis, c, levels=contoursettings['levels'])
     scatter((R/2,-R/2,R/2,-R/2), (R,R,-R,-R), s = 20, color = "black")
     # small circle for dipole
     plot(sR*cos(phi), sR*sin(phi), color="black")
@@ -85,13 +93,13 @@ def contourplot():
     savefig("coil_contour.svg")
     plt.show()
 
-def fieldplot():
+def quiverplot():
     global viewport
     viewport = 20
-    div = 10
+    div = quiversettings['resolution']
     fig_3d = plt.figure(num = 2, figsize = (10, 8))
     ax = fig_3d.gca(projection='3d')
-    bx,by,bz = simulate(div, div, div, 10)
+    bx,by,bz = simulate(div, div, div, quiversettings['dtheta'])
 
     # dark magic to make the colors work
     c = sqrt(bx**2 + by**2 + bz**2)
@@ -119,12 +127,7 @@ def fieldplot():
     savefig("coil_multiple.svg")
     plt.show()
 
-import sys
-opt = sys.argv[1]
-if opt == "contour":
+if (contoursettings['plot?'] == 1):
     contourplot()
-elif opt == "field":
-    fieldplot()
-elif opt == "all":
-    contourplot()
-    fieldplot()
+if (quiversettings['plot?'] == 1):
+    quiverplot()

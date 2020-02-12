@@ -1,0 +1,27 @@
+{
+    "R"                 : 20,
+    "sR"                : 6,
+    "viewport"          : 30,
+    "helmholtz":{
+        "from"          : -2,
+        "to"            : 2,
+        "number"        : 5,
+        "ratio"         : 20
+    },
+    "dipole":{
+        "from"          : -0.5,
+        "to"            : 0.5,
+        "number"        : 0
+    },
+    "contour":{
+        "resolution"    : 100,
+        "dtheta"        : 10,
+        "levels"        : [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,1,1.05,1.1],
+        "plot?"         : 1
+    },
+    "quiver":{
+        "resolution"    : 10,
+        "dtheta"        : 10,
+        "plot?"         : 0
+    }
+}
