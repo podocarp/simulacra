@@ -1,5 +1,8 @@
 {
-    "N": 80,
-    "trials": 1000,
-    "step": 0.1
+    "N": 20,
+    "trials": 100,
+    "step": 0.1,
+    "p": 0.05,
+    "binomOrPoisson": false,
+    "plotExact": true
 }
